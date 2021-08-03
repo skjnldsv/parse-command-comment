@@ -19,21 +19,17 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           reaction-type: "+1"
 
-      - name: Init arguments
-        # Init arguments
-        run: |
-          command="${{ github.event.comment.body }}"
-          arguments=($command)
-          echo "arg1=${arguments[1]}" >> "$GITHUB_ENV"
-          echo "arg2=${arguments[2]}" >> "$GITHUB_ENV"
+      - name: Parse command
+        uses: skjnldsv/parse-command-comment@master
+        id: command
 
       - name: Init path
         # Init path depending on which command is run
         run: |    
-          if ${{ startsWith(env.arg1, '/') }}; then
-            echo "git_path=${{ github.workspace }}${{env.arg1}}" >> "$GITHUB_ENV"
+          if ${{ startsWith(steps.command.outputs.arguments[1], '/') }}; then
+            echo "git_path=${{ github.workspace }}${{steps.command.outputs.arguments[1]}}" >> "$GITHUB_ENV"
           else
-            echo "git_path=${{ github.workspace }}${{env.arg2}}" >> "$GITHUB_ENV"
+            echo "git_path=${{ github.workspace }}${{steps.command.outputs.arguments[2]}}" >> "$GITHUB_ENV"
           fi
 
       - name: Init branch
@@ -75,21 +71,21 @@ jobs:
 
       - name: Commit and push default
         # If the first argument starts with a /
-        if: ${{ startsWith(env.arg1, '/') }}
+        if: ${{ startsWith(steps.command.outputs.arguments[1], '/') }}
         run: |
           git add ${{ env.git_path }}
           git commit --signoff -m 'Compile assets'
           git push origin ${{ env.ref }}
 
       - name: Commit and push fixup
-        if: ${{ env.arg1 == 'fixup' }}
+        if: ${{ steps.command.outputs.arguments[1] == 'fixup' }}
         run: |
           git add ${{ env.git_path }}
           git commit --fixup=HEAD --signoff
           git push origin ${{ env.ref }}
 
       - name: Commit and push amend
-        if: ${{ env.arg1 == 'amend' }}
+        if: ${{ steps.command.outputs.arguments[1] == 'amend' }}
         run: |
           git add ${{ env.git_path }}
           git commit --amend --no-edit --signoff
