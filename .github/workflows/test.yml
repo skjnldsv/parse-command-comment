@@ -1,7 +1,5 @@
 name: "Test"
 on:
-  issue_comment:
-    types: [created]
   pull_request:
   push:
     branches:
