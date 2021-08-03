@@ -37,4 +37,3 @@ jobs:
 
       - name: Local action test
         uses: ./
-        id: command

@@ -25,37 +25,59 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
 const fs_1 = __nccwpck_require__(747);
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            let payload;
-            if (process.env.GITHUB_EVENT_PATH &&
-                fs_1.existsSync(process.env.GITHUB_EVENT_PATH)) {
-                payload = JSON.parse(fs_1.readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
-            }
-            else {
-                throw new Error("Unable to fetch event payload");
-            }
-            console.log(payload);
+const parseCommand_1 = __importDefault(__nccwpck_require__(886));
+async function run() {
+    try {
+        let payload;
+        if (process.env.GITHUB_EVENT_PATH &&
+            fs_1.existsSync(process.env.GITHUB_EVENT_PATH)) {
+            // Parse the payload data
+            payload = JSON.parse(fs_1.readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
         }
-        catch (error) {
-            core.setFailed(error.message);
+        else {
+            throw new Error("Unable to fetch event payload");
         }
-    });
+        // If we have a valid comment
+        if (payload.comment && typeof payload.comment.body === "string") {
+            const args = parseCommand_1.default(payload.comment.body);
+            core.setOutput("arguments", args);
+        }
+    }
+    catch (error) {
+        core.setFailed(error.message);
+    }
 }
 run();
+
+
+/***/ }),
+
+/***/ 886:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const parseCommand = function (command) {
+    if (!command.startsWith("/")) {
+        throw new Error("Command should start with a leading slash");
+    }
+    // Remove leading slash and split to get the first line only
+    command = command.substr(1).split("\n")[0];
+    const badChars = [...command.matchAll(/[^A-Za-z0-9\-_/ ]/g)].flat();
+    if (badChars.length > 0) {
+        throw new Error("Invalid character found in the command or in the command argument(s): " +
+            badChars.join(", "));
+    }
+    // split command and arguments
+    return command.split(" ");
+};
+exports.default = parseCommand;
 
 
 /***/ }),
