@@ -1,0 +1,38 @@
+name: "Test"
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+      - "releases/*"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Unit Test
+        run: npm test
+
+      - name: Package
+        run: npm run package
+
+      - name: Local action test
+        uses: ./
+        id: command

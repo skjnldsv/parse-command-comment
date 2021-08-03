@@ -1,0 +1,19 @@
+name: 'Read package.json node and npm engines version'
+description: 'Output node and npm version number from package.json engines field'
+
+branding:
+  icon: 'check-square'
+  color: 'blue'
+
+inputs:
+  comment:
+    required: false
+    description: 'The comment to parse'
+
+outputs:
+  arguments:
+    description: "An array of strings containing the various command arguments"
+
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
