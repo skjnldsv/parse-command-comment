@@ -29,7 +29,7 @@
   "author": "skjnldsv",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.0.0",
+    "@actions/core": "^1.4.0",
     "@actions/github": "^5.0.0"
   },
   "devDependencies": {
@@ -37,12 +37,11 @@
     "@types/node": "^12.0.4",
     "@typescript-eslint/eslint-plugin": "^2.7.0",
     "@typescript-eslint/parser": "^2.7.0",
-    "@vercel/ncc": "^0.28.6",
+    "@vercel/ncc": "^0.29.0",
     "commitizen": "^4.2.4",
-    "cz-conventional-changelog": "^3.0.2",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.6.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-prettier": "^3.4.0",
     "jest": "^24.8.0",
     "jest-circus": "^24.7.1",
     "lint-staged": "^9.4.3",
