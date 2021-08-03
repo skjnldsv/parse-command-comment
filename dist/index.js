@@ -36,10 +36,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core = __importStar(__nccwpck_require__(186));
+const fs_1 = __nccwpck_require__(747);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            console.log(process.env);
+            let payload;
+            if (process.env.GITHUB_EVENT_PATH &&
+                fs_1.existsSync(process.env.GITHUB_EVENT_PATH)) {
+                payload = JSON.parse(fs_1.readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" }));
+            }
+            else {
+                throw new Error("Unable to fetch event payload");
+            }
+            console.log(payload);
         }
         catch (error) {
             core.setFailed(error.message);
