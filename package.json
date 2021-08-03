@@ -1,0 +1,51 @@
+{
+  "engines": {
+    "node": "^12.0.0",
+    "npm": "^7.0.0"
+  },
+  "name": "parse-command-comment",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Parse github comment event as a slash command",
+  "main": "lib/main.js",
+  "scripts": {
+    "lint": "eslint src/**/*.ts",
+    "lint:fix": "eslint --fix src/**/*.ts",
+    "precommit": "npm run build && lint-staged && npm run test",
+    "build": "tsc",
+    "build:watch": "tsc -w",
+    "package": "ncc build --source-map --license licenses.txt",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skjnldsv/parse-command-comment.git"
+  },
+  "keywords": [
+    "actions",
+    "node",
+    "setup"
+  ],
+  "author": "skjnldsv",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "@actions/github": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.9.1",
+    "@types/node": "^12.20.18",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "@vercel/ncc": "^0.29.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.6.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^24.8.0",
+    "jest-circus": "^24.7.1",
+    "lint-staged": "^9.4.3",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.1"
+  }
+}
