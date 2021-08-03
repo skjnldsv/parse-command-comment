@@ -21,7 +21,9 @@ async function run(): Promise<void> {
     // If we have a valid comment
     if (payload.comment && typeof payload.comment.body === "string") {
       const args = parseCommand(payload.comment.body);
-      core.setOutput("arguments", args);
+      args.forEach((arg, index) => {
+        core.setOutput(`arg${index}`, arg);
+      });
     }
   } catch (error) {
     core.setFailed(error.message);

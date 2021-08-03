@@ -46,7 +46,9 @@ async function run() {
         // If we have a valid comment
         if (payload.comment && typeof payload.comment.body === "string") {
             const args = parseCommand_1.default(payload.comment.body);
-            core.setOutput("arguments", args);
+            args.forEach((arg, index) => {
+                core.setOutput(`arg${index}`, arg);
+            });
         }
     }
     catch (error) {
