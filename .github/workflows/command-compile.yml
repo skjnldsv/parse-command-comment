@@ -91,21 +91,21 @@ jobs:
         run: |
           git add ${{ needs.init.outputs.git_path }}
           git commit --signoff -m 'Compile assets'
-          git push origin ${{ env.ref }}
+          git push origin ${{ steps.comment-branch.outputs.head_ref }}
 
       - name: Commit and push fixup
         if: ${{ needs.init.outputs.arg1 == 'fixup' }}
         run: |
           git add ${{ env.git_path }}
           git commit --fixup=HEAD --signoff
-          git push origin ${{ env.ref }}
+          git push origin ${{ steps.comment-branch.outputs.head_ref }}
 
       - name: Commit and push amend
         if: ${{ needs.init.outputs.arg1 == 'amend' }}
         run: |
           git add ${{ env.git_path }}
           git commit --amend --no-edit --signoff
-          git push --force origin ${{ env.ref }}
+          git push --force origin ${{ steps.comment-branch.outputs.head_ref }}
 
       - name: Add reaction on failure
         uses: peter-evans/create-or-update-comment@v1
