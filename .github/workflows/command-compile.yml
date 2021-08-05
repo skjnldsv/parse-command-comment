@@ -17,6 +17,11 @@ jobs:
       head: ${{ steps.comment-branch.outputs.head_ref }}
 
     steps:
+      - name: Check actor permission
+        uses: skjnldsv/check-actor-permission@v2
+        with:
+          require: write
+
       - name: Add reaction on start
         uses: peter-evans/create-or-update-comment@v1
         with:
@@ -53,7 +58,12 @@ jobs:
           token: ${{ secrets.COMMAND_BOT_PAT }}
           fetch-depth: 0
           ref: ${{ steps.comment-branch.outputs.head_ref }}
-      
+
+      - name: Setup git
+        run: |
+          git config --local user.email "npmbuildbot-nextcloud[bot]@users.noreply.github.com"
+          git config --local user.name "npmbuildbot-nextcloud[bot]"
+
       - name: Read package.json node and npm engines version
         uses: skjnldsv/read-package-engines-version-actions@v1
         id: package-engines-versions
@@ -75,11 +85,6 @@ jobs:
           npm ci
           npm run build --if-present
           npm run package --if-present
-
-      - name: Setup git
-        run: |
-          git config --local user.email "npmbuildbot-nextcloud[bot]@users.noreply.github.com"
-          git config --local user.name "npmbuildbot-nextcloud[bot]"
 
       - name: Commit and push default
         if: ${{ needs.init.outputs.arg1 != 'fixup' && needs.init.outputs.arg1 != 'amend' }}
