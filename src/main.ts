@@ -15,7 +15,7 @@ async function run(): Promise<void> {
         readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: "utf8" })
       );
     } else {
-      throw new Error("Unable to fetch event payload");
+      throw new Error("Unable to fetch event payload data");
     }
 
     // If we have a valid comment
