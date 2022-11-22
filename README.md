@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Parse command
-        uses: skjnldsv/parse-command-comment@v1
+        uses: skjnldsv/parse-command-comment@v2
         id: command
         # steps.command.outputs.arg1
         # steps.command.outputs.arg2
