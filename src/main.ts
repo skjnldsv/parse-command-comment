@@ -25,8 +25,10 @@ async function run(): Promise<void> {
         core.setOutput(`arg${index}`, arg);
       });
     }
-  } catch (error) {
-    core.setFailed(error.message);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      core.setFailed(error.message);
+    }
   }
 }
 
