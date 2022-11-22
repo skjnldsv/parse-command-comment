@@ -7,7 +7,7 @@ on:
       - "releases/*"
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,14 +24,5 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Build
-        run: npm run build
-
-      - name: Unit Test
-        run: npm test
-
-      - name: Package
-        run: npm run package
-
-      - name: Local action test
-        uses: ./
+      - name: Lint
+        run: npm run lint
