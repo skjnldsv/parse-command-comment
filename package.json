@@ -4,7 +4,7 @@
 		"npm": "^8.0.0"
 	},
 	"name": "parse-command-comment",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"private": true,
 	"description": "Parse github comment event as a slash command",
 	"main": "lib/main.js",
