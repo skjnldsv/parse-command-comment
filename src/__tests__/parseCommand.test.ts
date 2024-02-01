@@ -23,7 +23,7 @@ describe('parseCommand', () => {
     const result = (): Array<string> => parseCommand('/get test 789;${12346}');
 
     expect(result).toThrow(
-      'Invalid character found in the command or in the command argument(s): ;, $, {, }'
+      'Invalid character found in the command or in the command argument(s): ;, $, {, }',
     );
   });
 

@@ -12,7 +12,7 @@ async function run(): Promise<void> {
     ) {
       // Parse the payload data
       payload = JSON.parse(
-        readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: 'utf8' })
+        readFileSync(process.env.GITHUB_EVENT_PATH, { encoding: 'utf8' }),
       );
     } else {
       throw new Error('Unable to fetch event payload');

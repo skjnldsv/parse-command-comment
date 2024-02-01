@@ -1,4 +1,4 @@
-const parseCommand = function(command: string): Array<string> {
+const parseCommand = function (command: string): Array<string> {
   if (!command.startsWith('/')) {
     throw new Error('Command should start with a leading slash');
   }
@@ -11,7 +11,7 @@ const parseCommand = function(command: string): Array<string> {
   if (badChars.length > 0) {
     throw new Error(
       'Invalid character found in the command or in the command argument(s): ' +
-        badChars.join(', ')
+        badChars.join(', '),
     );
   }
   // split command and arguments
