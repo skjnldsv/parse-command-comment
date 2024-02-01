@@ -1,6 +1,9 @@
+# https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions
 name: 'Extract comment command arguments'
 description: 'Extract the command arguments from the workflow comment event body'
+author: skjnldsv
 
+# https://actions-cool.github.io/github-action-branding/
 branding:
   icon: 'check-square'
   color: 'blue'
