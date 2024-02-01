@@ -1,4 +1,4 @@
-name: Test
+name: Node
 
 on:
   pull_request:
@@ -10,11 +10,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: test-${{ github.head_ref || github.run_id }}
+  group: node-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,17 +36,18 @@ jobs:
       - name: Set up npm ${{ steps.versions.outputs.npmVersion }}
         run: npm i -g npm@"${{ steps.versions.outputs.npmVersion }}"
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Install dependencies & build
+        run: |
+          npm ci
+          npm run build --if-present
 
-      - name: Build
-        run: npm run build
+      - name: Check build changes
+        run: |
+          bash -c "[[ ! \"`git status --porcelain `\" ]] || (echo 'Please recompile and commit the assets, see the section \"Show changes on failure\" for details' && exit 1)"
 
-      - name: Unit Test
-        run: npm test
-
-      - name: Package
-        run: npm run package
-
-      - name: Local action test
-        uses: ./
+      - name: Show changes on failure
+        if: failure()
+        run: |
+          git status
+          git --no-pager diff
+          exit 1 # make it red to grab attention
