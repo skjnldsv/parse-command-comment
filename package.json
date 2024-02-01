@@ -8,6 +8,7 @@
     "lint:fix": "eslint --fix src/*.ts src/**/*.ts",
     "build": "tsc",
     "build:watch": "tsc -w",
+    "package": "ncc build --source-map --license licenses.txt",
     "test": "jest",
     "prettier": "prettier --check src/*.ts src/**/*.ts",
     "prettier:fix": "prettier --write src/*.ts src/**/*.ts"
