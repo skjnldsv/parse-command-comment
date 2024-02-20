@@ -45,8 +45,5 @@ jobs:
       - name: Unit Test
         run: npm test
 
-      - name: Package
-        run: npm run package
-
       - name: Local action test
         uses: ./
