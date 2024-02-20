@@ -2,16 +2,14 @@
   "name": "@skjnldsv/parse-command-comment",
   "description": "Parse github comment event as a slash command",
   "private": true,
-  "main": "lib/main.js",
+  "main": "src/main.ts",
   "scripts": {
-    "lint": "eslint src/*.ts src/**/*.ts",
-    "lint:fix": "eslint --fix src/*.ts src/**/*.ts",
-    "build": "tsc",
-    "build:watch": "tsc -w",
-    "package": "ncc build --source-map --license licenses.txt",
+    "build": "ncc build --source-map --license licenses.txt",
     "test": "jest",
     "prettier": "prettier --check src/*.ts src/**/*.ts",
-    "prettier:fix": "prettier --write src/*.ts src/**/*.ts"
+    "prettier:fix": "prettier --write src/*.ts src/**/*.ts",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "repository": {
     "type": "git",
