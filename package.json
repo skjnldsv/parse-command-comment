@@ -23,7 +23,7 @@
   "author": "skjnldsv",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.11.1"
+    "@actions/core": "^3.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.38.0",
